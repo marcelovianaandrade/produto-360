@@ -1,0 +1,146 @@
+/**
+ * Produto 360 - Front viewer styles
+ */
+
+.p360-viewer {
+	position: relative;
+	width: 100%;
+	max-width: 520px;
+	aspect-ratio: 1 / 1;
+	margin: 0 auto;
+	user-select: none;
+	-webkit-user-drag: none;
+	touch-action: none;
+	overflow: hidden;
+	border-radius: 12px;
+	background: transparent;
+	--p360-color: #295F7A;
+}
+
+.p360-viewer .p360-stage {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.p360-viewer .p360-img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+	pointer-events: none;
+	transform: scale(1);
+	transform-origin: center center;
+	will-change: transform;
+	opacity: 0;
+	transition: opacity .25s;
+}
+
+.p360-viewer.is-ready .p360-img {
+	opacity: 1;
+}
+
+/* Loader */
+.p360-viewer .p360-loader {
+	position: absolute;
+	inset: 0;
+	background: rgba(255, 255, 255, .92);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	z-index: 10;
+	transition: opacity .3s;
+}
+
+.p360-viewer.is-ready .p360-loader {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.p360-viewer .p360-spinner {
+	width: 42px;
+	height: 42px;
+	border: 3px solid #e5e7eb;
+	border-top-color: var(--p360-color);
+	border-radius: 50%;
+	animation: p360-spin 0.9s linear infinite;
+}
+
+.p360-viewer .p360-loader-text {
+	font-size: 13px;
+	color: #6b7280;
+	letter-spacing: .3px;
+}
+
+@keyframes p360-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Hint */
+.p360-viewer .p360-hint {
+	position: absolute;
+	left: 50%;
+	bottom: 20px;
+	transform: translateX(-50%);
+	background: var(--p360-color);
+	color: #fff;
+	padding: 6px 12px;
+	border-radius: 90px;
+	font-size: 12px;
+	white-space: nowrap;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity .25s;
+	z-index: 3;
+}
+
+.p360-viewer.is-ready .p360-hint {
+	opacity: 1;
+}
+
+.p360-viewer.is-interacted .p360-hint {
+	opacity: 0;
+}
+
+/* Controles de zoom */
+.p360-viewer .p360-zoom {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: flex;
+	gap: 6px;
+	z-index: 3;
+}
+
+.p360-viewer .p360-btn {
+	background: var(--p360-color);
+	color: #fff;
+	border: 0;
+	border-radius: 10px;
+	padding: 4px 10px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	font-family: inherit;
+	line-height: 1.4;
+	transition: opacity .15s, transform .1s;
+}
+
+.p360-viewer .p360-btn:hover {
+	opacity: 0.85;
+}
+
+.p360-viewer .p360-btn:active {
+	transform: scale(0.95);
+}
+
+/* Mensagem de erro (preview admin) */
+.p360-error {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}

@@ -1,0 +1,134 @@
+/**
+ * Produto 360 - Admin styles
+ */
+
+.p360-admin-images .p360-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	margin: 12px 0 16px;
+	padding: 12px;
+	background: #f6f7f7;
+	border-radius: 6px;
+}
+
+.p360-admin-images .p360-counter {
+	margin-left: auto;
+	font-size: 13px;
+	color: #50575e;
+}
+
+.p360-admin-images .p360-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+	gap: 10px;
+	min-height: 60px;
+}
+
+.p360-admin-images .p360-item {
+	position: relative;
+	background: #fff;
+	border: 2px solid #dcdcde;
+	border-radius: 6px;
+	overflow: hidden;
+	cursor: move;
+	transition: border-color .15s, box-shadow .15s, transform .15s;
+	aspect-ratio: 1 / 1;
+}
+
+.p360-admin-images .p360-item:hover {
+	border-color: #2271b1;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+}
+
+.p360-admin-images .p360-item.ui-sortable-helper {
+	transform: rotate(2deg) scale(1.05);
+	box-shadow: 0 6px 14px rgba(0, 0, 0, .15);
+}
+
+.p360-admin-images .p360-item.ui-sortable-placeholder {
+	visibility: visible !important;
+	background: #f0f6fc;
+	border: 2px dashed #2271b1;
+}
+
+.p360-admin-images .p360-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	pointer-events: none;
+}
+
+.p360-admin-images .p360-frame {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	background: rgba(0, 0, 0, .7);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 3px;
+	z-index: 2;
+}
+
+.p360-admin-images .p360-remove {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	width: 22px;
+	height: 22px;
+	border: 0;
+	background: rgba(220, 38, 38, .9);
+	color: #fff;
+	font-size: 16px;
+	line-height: 1;
+	border-radius: 50%;
+	cursor: pointer;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+}
+
+.p360-admin-images .p360-remove:hover {
+	background: rgba(185, 28, 28, 1);
+}
+
+.p360-admin-images .p360-empty {
+	padding: 30px;
+	text-align: center;
+	color: #646970;
+	background: #f6f7f7;
+	border: 2px dashed #c3c4c7;
+	border-radius: 6px;
+}
+
+/* Colunas da listagem */
+.column-p360_thumb {
+	width: 70px;
+}
+
+.column-p360_count {
+	width: 100px;
+}
+
+.p360-ok {
+	color: #00a32a;
+	font-weight: 600;
+}
+
+.p360-partial {
+	color: #dba617;
+	font-weight: 600;
+}
+
+.p360-empty {
+	color: #d63638;
+}
