@@ -46,15 +46,21 @@ Plugin profissional para exibir produtos em rotação 360°. Cada produto é ind
 
 **Com opções:**
 
-`[produto360 id="meu-produto" width="600px" autoplay="yes" fps="15" color="#ff6600"]`
+`[produto360 id="meu-produto" width="600px" height="600px" autoplay="no"]`
 
 **Atributos disponíveis:**
 
-* `id` (obrigatório) — slug ou ID do produto
-* `width` — largura máxima (padrão: 520px)
+* `id` (obrigatório) — slug do produto (recomendado) ou ID numérico
+* `width` — largura máxima (padrão: 520px). Aceita px, %, em, rem, vw, vh
+* `height` — altura fixa opcional (por padrão é quadrado 1:1)
 * `autoplay` — yes / no (sobrescreve configuração do produto)
-* `fps` — 1 a 60 quadros por segundo
-* `color` — cor dos controles em hexadecimal
+* `class` — classe CSS extra
+
+**Configurações por produto (definidas no admin):**
+
+* FPS (velocidade da rotação)
+* Direção (horária / anti-horária)
+* Cor dos controles
 
 == Frequently Asked Questions ==
 

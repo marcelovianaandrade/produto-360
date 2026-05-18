@@ -22,21 +22,22 @@ class P360_Shortcode {
 	 * Renderiza o shortcode.
 	 *
 	 * Aceita os atributos:
-	 *  - id          : slug ou ID numérico do produto (obrigatório)
-	 *  - width       : largura máxima (ex: "520px" ou "100%")
-	 *  - autoplay    : "yes" | "no"
-	 *  - fps         : 1-60
-	 *  - color       : cor dos controles em hex (#RRGGBB)
+	 *  - id          : slug do produto (obrigatório). Ex: "produto-a"
+	 *                  Aceita ID numérico como fallback.
+	 *  - width       : largura máxima (ex: "520px", "100%")
+	 *  - height      : altura fixa opcional (ex: "520px"). Padrão: aspect ratio 1:1
+	 *  - autoplay    : "yes" | "no" (sobrescreve config do produto)
 	 *  - class       : classe CSS extra
+	 *
+	 * Demais opções (fps, direção, cor) são definidas por produto na admin.
 	 */
 	public static function render( $atts ) {
 		$atts = shortcode_atts(
 			array(
 				'id'       => '',
 				'width'    => '520px',
+				'height'   => '',
 				'autoplay' => '',
-				'fps'      => '',
-				'color'    => '',
 				'class'    => '',
 			),
 			$atts,
@@ -65,20 +66,18 @@ class P360_Shortcode {
 
 		$settings = P360_Post_Type::get_settings( $post->ID );
 
-		// Override pelos atributos do shortcode
+		// Override apenas do autoplay (demais configs ficam no produto)
 		if ( '' !== $atts['autoplay'] ) {
 			$settings['autoplay'] = in_array( strtolower( $atts['autoplay'] ), array( 'yes', 'true', '1' ), true ) ? 1 : 0;
-		}
-		if ( '' !== $atts['fps'] && is_numeric( $atts['fps'] ) ) {
-			$settings['fps'] = max( 1, min( 60, intval( $atts['fps'] ) ) );
-		}
-		if ( '' !== $atts['color'] && sanitize_hex_color( $atts['color'] ) ) {
-			$settings['color'] = $atts['color'];
 		}
 
 		self::$instance_counter++;
 		$instance_id = 'p360-instance-' . $post->ID . '-' . self::$instance_counter;
-		$width       = preg_match( '/^\d+(px|%|em|rem|vw)?$/', $atts['width'] ) ? $atts['width'] : '520px';
+
+		// Sanitização de dimensões
+		$width  = self::sanitize_dimension( $atts['width'], '520px' );
+		$height = self::sanitize_dimension( $atts['height'], '' );
+
 		$extra_class = sanitize_html_class( $atts['class'] );
 
 		// Sinaliza para o Assets enfileirar o script no footer
@@ -92,13 +91,20 @@ class P360_Shortcode {
 			'color'     => $settings['color'],
 		);
 
+		// Monta o style inline
+		$style  = 'max-width: ' . esc_attr( $width ) . ';';
+		$style .= ' --p360-color: ' . esc_attr( $settings['color'] ) . ';';
+		if ( ! empty( $height ) ) {
+			$style .= ' height: ' . esc_attr( $height ) . '; aspect-ratio: auto;';
+		}
+
 		ob_start();
 		?>
 		<div
 			id="<?php echo esc_attr( $instance_id ); ?>"
 			class="p360-viewer <?php echo esc_attr( $extra_class ); ?>"
 			data-p360-config="<?php echo esc_attr( wp_json_encode( $config ) ); ?>"
-			style="max-width: <?php echo esc_attr( $width ); ?>; --p360-color: <?php echo esc_attr( $settings['color'] ); ?>;"
+			style="<?php echo $style; // já escapado acima ?>"
 			aria-label="<?php echo esc_attr( sprintf( __( 'Visualização 360° de %s', 'produto-360' ), $post->post_title ) ); ?>"
 		>
 			<div class="p360-loader" aria-hidden="true">
@@ -120,6 +126,21 @@ class P360_Shortcode {
 		</div>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Valida e sanitiza um valor de dimensão CSS.
+	 * Aceita px, %, em, rem, vw, vh.
+	 */
+	private static function sanitize_dimension( $value, $default ) {
+		$value = trim( (string) $value );
+		if ( '' === $value ) {
+			return $default;
+		}
+		if ( preg_match( '/^\d+(\.\d+)?(px|%|em|rem|vw|vh)?$/', $value ) ) {
+			return $value;
+		}
+		return $default;
 	}
 
 	private static function error_message( $message ) {

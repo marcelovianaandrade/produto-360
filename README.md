@@ -60,20 +60,21 @@ Após publicar, o shortcode aparece na lateral. Exemplo:
 
 | Atributo | Valor padrão | Descrição |
 |----------|-------------|-----------|
-| `id` | — (obrigatório) | Slug ou ID do produto |
-| `width` | `520px` | Largura máxima (px, %, em, etc.) |
-| `autoplay` | configuração do produto | `yes` ou `no` |
-| `fps` | configuração do produto | 1 a 60 quadros por segundo |
-| `color` | configuração do produto | Cor dos controles em hex |
+| `id` | — (obrigatório) | Slug do produto (ex: `produto-a`) ou ID numérico |
+| `width` | `520px` | Largura máxima (px, %, em, rem, vw, vh) |
+| `height` | — | Altura fixa opcional (se omitida, usa proporção 1:1) |
+| `autoplay` | configuração do produto | `yes` ou `no` (sobrescreve admin) |
 | `class` | — | Classe CSS extra |
+
+> 💡 **FPS, direção e cor** dos controles são configurados na admin de cada produto.
 
 ### Exemplos
 
 ```
-[produto360 id="sapato-premium"]
-[produto360 id="sapato-premium" width="100%"]
-[produto360 id="sapato-premium" autoplay="no" fps="20"]
-[produto360 id="sapato-premium" color="#ff6600"]
+[produto360 id="produto-a"]
+[produto360 id="produto-a" width="100%"]
+[produto360 id="produto-a" width="600px" height="600px"]
+[produto360 id="produto-a" autoplay="no"]
 ```
 
 ## 🎮 Controles do visualizador

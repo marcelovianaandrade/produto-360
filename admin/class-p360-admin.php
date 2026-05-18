@@ -261,8 +261,12 @@ class P360_Admin {
 			return;
 		}
 
-		$slug      = $post->post_name ? $post->post_name : $post->ID;
-		$shortcode = '[produto360 id="' . $slug . '"]';
+		if ( empty( $post->post_name ) ) {
+			echo '<p class="description">' . esc_html__( 'Defina um título e salve o produto para gerar o slug.', 'produto-360' ) . '</p>';
+			return;
+		}
+
+		$shortcode = '[produto360 id="' . $post->post_name . '"]';
 		?>
 		<p><?php esc_html_e( 'Copie e cole em qualquer página ou post:', 'produto-360' ); ?></p>
 		<input
@@ -273,11 +277,11 @@ class P360_Admin {
 			style="width:100%;font-family:monospace;padding:8px;background:#f6f7f7;border:1px solid #ccd0d4;"
 		/>
 		<p class="description" style="margin-top:8px;">
-			<?php esc_html_e( 'Atributos opcionais:', 'produto-360' ); ?><br>
-			<code>width="520px"</code><br>
-			<code>autoplay="yes"</code> | <code>autoplay="no"</code><br>
-			<code>fps="12"</code><br>
-			<code>color="#295F7A"</code>
+			<strong><?php esc_html_e( 'Atributos opcionais:', 'produto-360' ); ?></strong><br>
+			<code>width="520px"</code> &mdash; <?php esc_html_e( 'largura máxima', 'produto-360' ); ?><br>
+			<code>height="520px"</code> &mdash; <?php esc_html_e( 'altura fixa', 'produto-360' ); ?><br>
+			<code>autoplay="yes"</code> | <code>autoplay="no"</code><br><br>
+			<em><?php esc_html_e( 'FPS, direção e cor são configurados ao lado, por produto.', 'produto-360' ); ?></em>
 		</p>
 		<?php
 	}
@@ -346,11 +350,11 @@ class P360_Admin {
 
 			case 'p360_shortcode':
 				$post = get_post( $post_id );
-				if ( ! $post ) {
+				if ( ! $post || empty( $post->post_name ) ) {
+					echo '<em>' . esc_html__( '(salve para gerar)', 'produto-360' ) . '</em>';
 					return;
 				}
-				$slug      = $post->post_name ? $post->post_name : $post->ID;
-				$shortcode = '[produto360 id="' . $slug . '"]';
+				$shortcode = '[produto360 id="' . $post->post_name . '"]';
 				echo '<code style="font-size:11px;cursor:pointer;" onclick="navigator.clipboard.writeText(this.innerText);" title="' . esc_attr__( 'Clique para copiar', 'produto-360' ) . '">'
 					. esc_html( $shortcode ) . '</code>';
 				break;
