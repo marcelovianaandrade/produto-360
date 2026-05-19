@@ -1,0 +1,65 @@
+name: Build & Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build ZIP and create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Extrair versão da tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Criar ZIP do plugin
+        run: |
+          mkdir -p build
+          rsync -av \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.gitignore' \
+            --exclude='build' \
+            --exclude='.vscode' \
+            --exclude='.idea' \
+            --exclude='*.md' \
+            --exclude='CHANGELOG.md' \
+            ./ build/produto-360/
+          cd build && zip -r produto-360.zip produto-360/
+          ls -la
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/produto-360.zip
+          generate_release_notes: true
+          name: "v${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## 📦 Produto 360 v${{ steps.version.outputs.VERSION }}
+
+            ### 📥 Instalação
+
+            1. Baixe o arquivo `produto-360.zip` abaixo
+            2. No WordPress: **Plugins → Adicionar novo → Enviar plugin**
+            3. Selecione o ZIP e clique em **Instalar agora**
+            4. Ative o plugin
+            5. Acesse o menu **Produtos 360°** na barra lateral
+
+            ### 🚀 Uso rápido
+
+            ```
+            [produto360 id="meu-produto"]
+            ```
+
+            ---
+
+            ### 📝 Mudanças nesta versão
