@@ -4,6 +4,20 @@
 [![PHP](https://img.shields.io/badge/PHP-7.2%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![License: GPL v2](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
 
+<p align="center">
+  <a href="https://github.com/marcelovianaandrade/produto-360/releases/latest/download/produto-360.zip">
+    <img src="https://img.shields.io/badge/⬇️_Baixar_última_versão-2271B1?style=for-the-badge&logo=wordpress&logoColor=white" alt="Baixar plugin">
+  </a>
+  &nbsp;
+  <a href="https://github.com/marcelovianaandrade/produto-360/releases">
+    <img src="https://img.shields.io/badge/📦_Ver_releases-555?style=for-the-badge" alt="Ver releases">
+  </a>
+  &nbsp;
+  <a href="https://github.com/marcelovianaandrade/produto-360/stargazers">
+    <img src="https://img.shields.io/badge/⭐_Star-FFC107?style=for-the-badge" alt="Star">
+  </a>
+</p>
+
 Plugin WordPress para exibir produtos em rotação 360° com 36 imagens sequenciais. Visual moderno, suporte completo a mobile e múltiplos produtos independentes via shortcode.
 
 ---
