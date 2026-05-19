@@ -33,6 +33,8 @@ jobs:
             --exclude='.idea' \
             --exclude='*.md' \
             --exclude='CHANGELOG.md' \
+            --exclude='assets' \
+            --exclude='Screenshorts' \
             ./ build/produto-360/
           cd build && zip -r produto-360.zip produto-360/
           ls -la
