@@ -4,7 +4,7 @@ Tags: 360, viewer, product, 3d, rotation, woocommerce, elementor
 Requires at least: 5.5
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,12 @@ Sim. Há suporte completo a swipe (1 dedo gira, 2 dedos fazem pinch zoom).
 Sim. Use o widget de Shortcode do Elementor e cole `[produto360 id="..."]`.
 
 == Changelog ==
+
+= 1.1.0 =
+* Novo: zoom inicial configurável por produto (slider de 1.0x a 3.0x)
+* Novo: escolha do sentido de rotação ao arrastar o mouse (natural ou invertido)
+* Botão "Reset" agora volta ao zoom inicial configurado, não a 1.0x
+* Configuração de direção do autoplay separada do sentido de arrasto
 
 = 1.0.0 =
 * Lançamento inicial

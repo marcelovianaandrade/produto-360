@@ -130,18 +130,31 @@ class P360_Post_Type {
 	 */
 	public static function save_settings( $post_id, $settings ) {
 		$defaults = array(
-			'autoplay'  => 1,
-			'fps'       => 12,
-			'direction' => 1,
-			'color'     => '#295F7A',
+			'autoplay'       => 1,
+			'fps'            => 12,
+			'direction'      => 1,
+			'color'          => '#295F7A',
+			'zoom_initial'   => 1.0,
+			'drag_direction' => 1,
 		);
 		$settings = wp_parse_args( $settings, $defaults );
 
+		// Clamp zoom inicial entre 1.0 e 3.0
+		$zoom_initial = floatval( $settings['zoom_initial'] );
+		if ( $zoom_initial < 1.0 ) {
+			$zoom_initial = 1.0;
+		}
+		if ( $zoom_initial > 3.0 ) {
+			$zoom_initial = 3.0;
+		}
+
 		$clean = array(
-			'autoplay'  => $settings['autoplay'] ? 1 : 0,
-			'fps'       => max( 1, min( 60, intval( $settings['fps'] ) ) ),
-			'direction' => intval( $settings['direction'] ) >= 0 ? 1 : -1,
-			'color'     => sanitize_hex_color( $settings['color'] ) ? $settings['color'] : '#295F7A',
+			'autoplay'       => $settings['autoplay'] ? 1 : 0,
+			'fps'            => max( 1, min( 60, intval( $settings['fps'] ) ) ),
+			'direction'      => intval( $settings['direction'] ) >= 0 ? 1 : -1,
+			'color'          => sanitize_hex_color( $settings['color'] ) ? $settings['color'] : '#295F7A',
+			'zoom_initial'   => round( $zoom_initial, 2 ),
+			'drag_direction' => intval( $settings['drag_direction'] ) >= 0 ? 1 : -1,
 		);
 
 		update_post_meta( $post_id, '_p360_settings', $clean );
@@ -153,10 +166,12 @@ class P360_Post_Type {
 	public static function get_settings( $post_id ) {
 		$saved = get_post_meta( $post_id, '_p360_settings', true );
 		$defaults = array(
-			'autoplay'  => 1,
-			'fps'       => 12,
-			'direction' => 1,
-			'color'     => '#295F7A',
+			'autoplay'       => 1,
+			'fps'            => 12,
+			'direction'      => 1,
+			'color'          => '#295F7A',
+			'zoom_initial'   => 1.0,
+			'drag_direction' => 1,
 		);
 		if ( ! is_array( $saved ) ) {
 			return $defaults;

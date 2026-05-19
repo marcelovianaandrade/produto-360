@@ -29,6 +29,9 @@
 		this.acc = 0;
 		this.pxPerFrame = 8;
 
+		// sentido do arrasto (1 = natural, -1 = invertido)
+		this.dragDirection = config.drag_direction === -1 ? -1 : 1;
+
 		// zoom
 		this.scale = 1;
 		this.zoom = {
@@ -37,6 +40,7 @@
 			stepBtn: 0.15,
 			stepWheel: 0.10
 		};
+		this.initialScale = this.clampZoom(parseFloat(config.zoom_initial) || 1.0);
 
 		// autoSpin
 		this.autoSpin = {
@@ -58,6 +62,13 @@
 
 		this.init();
 	}
+
+	P360Viewer.prototype.clampZoom = function (v) {
+		if (isNaN(v)) return 1.0;
+		if (v < 1.0) return 1.0;
+		if (v > 3.0) return 3.0;
+		return v;
+	};
 
 	P360Viewer.prototype.srcFor = function (i) {
 		// 1-based
@@ -91,6 +102,8 @@
 
 	P360Viewer.prototype.onReady = function () {
 		this.el.classList.add('is-ready');
+		// Aplica zoom inicial configurado
+		this.setScale(this.initialScale);
 		var self = this;
 		if (this.autoSpin.enabled) {
 			setTimeout(function () { self.startSpin(); }, 600);
@@ -143,8 +156,10 @@
 	};
 
 	P360Viewer.prototype.dragStepFromAcc = function (acc) {
-		// Mantido conforme código base do usuário
-		return acc > 0 ? 1 : -1;
+		// dragDirection: 1 = natural (arrastar pra direita = gira pra direita)
+		//                -1 = invertido (arrastar pra direita = gira pra esquerda)
+		var natural = acc > 0 ? 1 : -1;
+		return natural * this.dragDirection;
 	};
 
 	P360Viewer.prototype.onDown = function (x) {
@@ -212,7 +227,7 @@
 				var v = btn.getAttribute('data-z');
 				if (v === '+') self.setScale(self.scale + self.zoom.stepBtn);
 				if (v === '-') self.setScale(self.scale - self.zoom.stepBtn);
-				if (v === 'reset') self.setScale(1);
+				if (v === 'reset') self.setScale(self.initialScale);
 			});
 		});
 

@@ -194,11 +194,13 @@ class P360_Admin {
 		}
 
 		$config = array(
-			'images'    => $urls,
-			'autoplay'  => (bool) $settings['autoplay'],
-			'fps'       => intval( $settings['fps'] ),
-			'direction' => intval( $settings['direction'] ),
-			'color'     => $settings['color'],
+			'images'         => $urls,
+			'autoplay'       => (bool) $settings['autoplay'],
+			'fps'            => intval( $settings['fps'] ),
+			'direction'      => intval( $settings['direction'] ),
+			'color'          => $settings['color'],
+			'zoom_initial'   => floatval( $settings['zoom_initial'] ),
+			'drag_direction' => intval( $settings['drag_direction'] ),
 		);
 		?>
 		<div
@@ -241,12 +243,44 @@ class P360_Admin {
 		</p>
 
 		<p>
-			<label for="p360_direction"><strong><?php esc_html_e( 'Direção:', 'produto-360' ); ?></strong></label><br>
-			<select id="p360_direction" name="p360_direction">
-				<option value="1" <?php selected( $settings['direction'], 1 ); ?>><?php esc_html_e( 'Horária', 'produto-360' ); ?></option>
-				<option value="-1" <?php selected( $settings['direction'], -1 ); ?>><?php esc_html_e( 'Anti-horária', 'produto-360' ); ?></option>
+			<label for="p360_direction"><strong><?php esc_html_e( 'Direção do autoplay:', 'produto-360' ); ?></strong></label><br>
+			<select id="p360_direction" name="p360_direction" style="width:100%;">
+				<option value="1" <?php selected( $settings['direction'], 1 ); ?>><?php esc_html_e( 'Horária ↻', 'produto-360' ); ?></option>
+				<option value="-1" <?php selected( $settings['direction'], -1 ); ?>><?php esc_html_e( 'Anti-horária ↺', 'produto-360' ); ?></option>
 			</select>
 		</p>
+
+		<hr>
+
+		<p>
+			<label for="p360_drag_direction"><strong><?php esc_html_e( 'Sentido ao arrastar:', 'produto-360' ); ?></strong></label><br>
+			<select id="p360_drag_direction" name="p360_drag_direction" style="width:100%;">
+				<option value="1" <?php selected( $settings['drag_direction'], 1 ); ?>><?php esc_html_e( 'Natural (arrastar → gira →)', 'produto-360' ); ?></option>
+				<option value="-1" <?php selected( $settings['drag_direction'], -1 ); ?>><?php esc_html_e( 'Invertido (arrastar → gira ←)', 'produto-360' ); ?></option>
+			</select>
+			<span class="description"><?php esc_html_e( 'Define para qual lado o objeto gira quando o usuário arrasta o mouse.', 'produto-360' ); ?></span>
+		</p>
+
+		<p>
+			<label for="p360_zoom_initial"><strong><?php esc_html_e( 'Zoom inicial:', 'produto-360' ); ?></strong></label><br>
+			<input
+				type="range"
+				id="p360_zoom_initial"
+				name="p360_zoom_initial"
+				value="<?php echo esc_attr( $settings['zoom_initial'] ); ?>"
+				min="1.0"
+				max="3.0"
+				step="0.1"
+				style="width:calc(100% - 60px);vertical-align:middle;"
+				oninput="document.getElementById('p360_zoom_value').textContent = parseFloat(this.value).toFixed(1) + 'x';"
+			/>
+			<span id="p360_zoom_value" style="display:inline-block;width:50px;text-align:right;font-weight:600;">
+				<?php echo esc_html( number_format( $settings['zoom_initial'], 1 ) . 'x' ); ?>
+			</span>
+			<span class="description" style="display:block;"><?php esc_html_e( '1.0x = sem zoom | 3.0x = zoom máximo', 'produto-360' ); ?></span>
+		</p>
+
+		<hr>
 
 		<p>
 			<label for="p360_color"><strong><?php esc_html_e( 'Cor dos controles:', 'produto-360' ); ?></strong></label><br>
@@ -307,10 +341,12 @@ class P360_Admin {
 
 		// Configurações
 		$settings = array(
-			'autoplay'  => isset( $_POST['p360_autoplay'] ) ? 1 : 0,
-			'fps'       => isset( $_POST['p360_fps'] ) ? intval( $_POST['p360_fps'] ) : 12,
-			'direction' => isset( $_POST['p360_direction'] ) ? intval( $_POST['p360_direction'] ) : 1,
-			'color'     => isset( $_POST['p360_color'] ) ? sanitize_text_field( wp_unslash( $_POST['p360_color'] ) ) : '#295F7A',
+			'autoplay'       => isset( $_POST['p360_autoplay'] ) ? 1 : 0,
+			'fps'            => isset( $_POST['p360_fps'] ) ? intval( $_POST['p360_fps'] ) : 12,
+			'direction'      => isset( $_POST['p360_direction'] ) ? intval( $_POST['p360_direction'] ) : 1,
+			'color'          => isset( $_POST['p360_color'] ) ? sanitize_text_field( wp_unslash( $_POST['p360_color'] ) ) : '#295F7A',
+			'zoom_initial'   => isset( $_POST['p360_zoom_initial'] ) ? floatval( $_POST['p360_zoom_initial'] ) : 1.0,
+			'drag_direction' => isset( $_POST['p360_drag_direction'] ) ? intval( $_POST['p360_drag_direction'] ) : 1,
 		);
 		P360_Post_Type::save_settings( $post_id, $settings );
 	}

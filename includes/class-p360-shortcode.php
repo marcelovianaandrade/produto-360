@@ -84,11 +84,13 @@ class P360_Shortcode {
 		P360_Assets::mark_used();
 
 		$config = array(
-			'images'    => $urls,
-			'autoplay'  => (bool) $settings['autoplay'],
-			'fps'       => intval( $settings['fps'] ),
-			'direction' => intval( $settings['direction'] ),
-			'color'     => $settings['color'],
+			'images'         => $urls,
+			'autoplay'       => (bool) $settings['autoplay'],
+			'fps'            => intval( $settings['fps'] ),
+			'direction'      => intval( $settings['direction'] ),
+			'color'          => $settings['color'],
+			'zoom_initial'   => floatval( $settings['zoom_initial'] ),
+			'drag_direction' => intval( $settings['drag_direction'] ),
 		);
 
 		// Monta o style inline

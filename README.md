@@ -124,6 +124,12 @@ produto-360/
 
 ## 📝 Changelog
 
+### 1.1.0
+- 🔍 **Zoom inicial** configurável por produto (slider 1.0x – 3.0x)
+- 🔄 **Sentido do arrasto** configurável (natural / invertido)
+- Botão "Reset" agora volta ao zoom inicial configurado
+- Direção do autoplay e sentido de arrasto agora são independentes
+
 ### 1.0.0
 - Lançamento inicial
 
