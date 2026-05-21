@@ -43,10 +43,6 @@ Plugin WordPress para exibir produtos em rotação 360° com 36 imagens sequenci
 ![Listagem de produtos com miniatura, contagem 36/36 e shortcode](assets/01-listagem.jpg)
 *Menu **Produtos 360°** no admin mostra cada item com capa, status de imagens (X/36) e shortcode pronto para copiar.*
 
-### Painel de edição completo
-![Painel de edição mostrando 36 imagens, configurações, preview e shortcode](assets/02-painel-edicao.jpg)
-*Tudo numa só tela: upload com drag-and-drop das 36 imagens, configurações por produto (autoplay, FPS, sentido de rotação, zoom inicial 1.0x–3.0x, cor dos controles), pré-visualização ao vivo e shortcode pronto para uso.*
-
 ## 📦 Instalação
 
 1. Baixe o ZIP em [Releases](../../releases) (ou clone este repo)
