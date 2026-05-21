@@ -1,10 +1,10 @@
 === Produto 360 ===
-Contributors: marceloviana
+Contributors: marcelovianaandrade
 Tags: 360, viewer, product, 3d, rotation, woocommerce, elementor
 Requires at least: 5.5
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

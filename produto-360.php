@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:       Produto 360
- * Plugin URI:        https://github.com/marceloviana/produto-360
+ * Plugin URI:        https://github.com/marcelovianaandrade/produto-360
  * Description:       Visualizador de produtos em 360° com 36 imagens sequenciais. Suporta múltiplos produtos independentes via shortcode.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 5.5
  * Requires PHP:      7.2
  * Author:            Marcelo Viana de Andrade
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Constantes do plugin
-define( 'P360_VERSION', '1.1.0' );
+define( 'P360_VERSION', '1.1.1' );
 define( 'P360_PLUGIN_FILE', __FILE__ );
 define( 'P360_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'P360_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
